@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"ios":{"default":{"projectId":"flutter-forum-test","appId":"1:174143505010:ios:e2c705edc4cdf34244f8eb","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"flutter-forum-test","configurations":{"ios":"1:174143505010:ios:e2c705edc4cdf34244f8eb"}}}}}}
