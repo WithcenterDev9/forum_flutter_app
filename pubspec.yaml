@@ -16,6 +16,9 @@ dependencies:
   firebase_core: ^3.12.1
   go_router: ^14.8.1
   cloud_firestore: ^5.6.5
+  image_picker: ^1.1.2
+  easy_design_system: ^0.0.28
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:

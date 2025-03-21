@@ -1,5 +1,4 @@
 import 'package:forum_firebase_app/screens/discussions/discussion.screen.dart';
-import 'package:forum_firebase_app/screens/home.screen.dart';
 import 'package:forum_firebase_app/screens/posts/post.add.screen.dart';
 import 'package:forum_firebase_app/screens/posts/post.screen.dart';
 import 'package:forum_firebase_app/screens/qna/qna.screen.dart';
@@ -8,9 +7,9 @@ import 'package:go_router/go_router.dart';
 // i believe that there is global key here
 
 final routerConfig = GoRouter(
-  initialLocation: '/',
+  debugLogDiagnostics: true,
+  initialLocation: '/discussion',
   routes: [
-    GoRoute(path: "/", builder: (context, state) => HomeScreen()),
     GoRoute(
       path: "/discussion",
       builder: (context, state) => DiscussionScreen(),

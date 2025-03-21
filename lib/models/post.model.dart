@@ -1,21 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Post {
+class PostModel {
   final String? id;
   final String title;
   final String body;
+  final String? photoUrl;
+  final String category;
 
-  Post({this.id, required this.title, required this.body});
+  PostModel({
+    this.id,
+    required this.title,
+    required this.body,
+    required this.category,
+    this.photoUrl,
+  });
 
-  factory Post.fromFirestore(
+  factory PostModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data()!;
-    return Post(id: snapshot.id, title: data['title'], body: data['body']);
+    return PostModel(
+      id: snapshot.id,
+      title: data['title'],
+      body: data['body'],
+      category: data['category'],
+      photoUrl: data['photoUrl'] | "",
+    );
   }
 
   Map<String, dynamic> toFirestore() {
-    return {'title': title, 'body': body};
+    return {
+      'title': title,
+      'body': body,
+      'category': category,
+      'photoUrl': photoUrl,
+    };
   }
 }

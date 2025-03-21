@@ -1,16 +1,12 @@
 # forum_firebase_app
 
-A new Flutter project.
+- This is my sample forum app that i've worked during my training
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+I've used the following technologies
+- Flutter
+- Firebase
+     
+# TODO
+[] - Needs to show a loading screen indicator when loading data
+[] - Image upload to firebase storage
+[] - display picture on our post
