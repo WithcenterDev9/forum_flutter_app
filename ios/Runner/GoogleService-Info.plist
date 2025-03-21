@@ -2,18 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>109766947030-ic4pg2ifaq1br2mfusv8mg5vl1038sjd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.109766947030-ic4pg2ifaq1br2mfusv8mg5vl1038sjd</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>109766947030-4oi5i0u241r3aefqa7rtpf4ong4ckg12.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCpT9VPK_QjAPSw3znE987aGPte_ed_OBY</string>
+	<string>AIzaSyC4JBZruWm7i8GI6W5Ge8HjXPN6LxEzZqM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>174143505010</string>
+	<string>109766947030</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.forum.firebase.forumFirebaseApp</string>
 	<key>PROJECT_ID</key>
-	<string>flutter-forum-test</string>
+	<string>withcenter-test-4</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flutter-forum-test.firebasestorage.app</string>
+	<string>withcenter-test-4.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:174143505010:ios:e2c705edc4cdf34244f8eb</string>
+	<string>1:109766947030:ios:a6f48ca90dcf6155239977</string>
+	<key>DATABASE_URL</key>
+	<string>https://withcenter-test-4-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

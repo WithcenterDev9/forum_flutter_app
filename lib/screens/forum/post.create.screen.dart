@@ -1,34 +1,37 @@
-import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:forum_firebase_app/global.dart';
 import 'package:forum_firebase_app/models/post.model.dart';
 import 'package:forum_firebase_app/widgets/label_textfield.dart';
 import 'package:forum_firebase_app/widgets/photo_picker.dart';
+import 'package:go_router/go_router.dart';
 
 // This the screen where the user can add a post
 
-class PostAddScreen extends StatefulWidget {
-  const PostAddScreen({super.key});
+class PostCreateScreen extends StatefulWidget {
+  static const String routeName = '/post_create/:category';
+  final String category;
+  const PostCreateScreen({super.key, required this.category});
 
   @override
-  State<PostAddScreen> createState() => _PostAddScreenState();
+  State<PostCreateScreen> createState() => _PostCreateScreenState();
 }
 
 typedef MenuEntry = DropdownMenuEntry<String>;
 
-class _PostAddScreenState extends State<PostAddScreen> {
+class _PostCreateScreenState extends State<PostCreateScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController bodyController = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   bool isLoading = false;
+  late String selectedCategory;
 
-  static const List<String> list = <String>["Discussion", "Question"];
-  static final List<MenuEntry> menuEntries = UnmodifiableListView<MenuEntry>(
-    list.map<MenuEntry>((String name) => MenuEntry(value: name, label: name)),
-  );
-  String dropdownValue = list.first;
+  @override
+  void initState() {
+    super.initState();
+    selectedCategory = widget.category;
+  }
 
   @override
   void dispose() {
@@ -37,7 +40,7 @@ class _PostAddScreenState extends State<PostAddScreen> {
     super.dispose();
   }
 
-  void mountHelp(String message) {
+  void displaySnackbar(String message) {
     if (mounted) {
       ScaffoldMessenger.of(
         context,
@@ -45,19 +48,22 @@ class _PostAddScreenState extends State<PostAddScreen> {
     }
   }
 
-  Future<void> addPost() async {
+  Future<void> createPost() async {
     try {
       isLoading = true;
       setState(() {});
-      final post = PostModel(
+      final post = PostModel.create(
         title: titleController.text,
         body: bodyController.text,
-        category: dropdownValue,
+        category: selectedCategory,
       );
-      await db.collection('posts').add(post.toFirestore());
-      mountHelp("Post added successfully");
+      await db.collection('posts').add(post);
+      displaySnackbar("Post added successfully");
+      if (mounted) {
+        context.pop();
+      }
     } catch (e) {
-      mountHelp("Failed to add post: $e");
+      displaySnackbar("Failed to add post: $e");
     } finally {
       isLoading = false;
       setState(() {});
@@ -89,19 +95,25 @@ class _PostAddScreenState extends State<PostAddScreen> {
                   Text("Post Type:"),
                   SizedBox(width: 20),
                   DropdownMenu(
-                    initialSelection: list.first,
+                    initialSelection: widget.category,
                     onSelected: (String? value) {
-                      dropdownValue = value!;
+                      selectedCategory = value!;
                       setState(() {});
                     },
-                    dropdownMenuEntries: menuEntries,
+                    dropdownMenuEntries:
+                        Category.categories
+                            .map(
+                              (e) =>
+                                  DropdownMenuEntry<String>(value: e, label: e),
+                            )
+                            .toList(),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
               isLoading
                   ? CircularProgressIndicator()
-                  : ElevatedButton(onPressed: addPost, child: Text("Post")),
+                  : ElevatedButton(onPressed: createPost, child: Text("Post")),
             ],
           ),
         ),
