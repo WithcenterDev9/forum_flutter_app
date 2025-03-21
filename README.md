@@ -10,3 +10,4 @@ I've used the following technologies
 [] - Needs to show a loading screen indicator when loading data
 [] - Image upload to firebase storage
 [] - display picture on our postHello from JaeHo
+2
