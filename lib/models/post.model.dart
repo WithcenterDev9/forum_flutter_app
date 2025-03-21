@@ -6,6 +6,7 @@ class PostModel {
   final String body;
   final String? photoUrl;
   final String category;
+  final DateTime createdAt;
 
   PostModel({
     this.id,
@@ -13,11 +14,11 @@ class PostModel {
     required this.body,
     required this.category,
     this.photoUrl,
+    required this.createdAt,
   });
 
-  factory PostModel.fromFirestore(
+  factory PostModel.fromSnapshot(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
   ) {
     final data = snapshot.data()!;
     return PostModel(
@@ -25,16 +26,23 @@ class PostModel {
       title: data['title'],
       body: data['body'],
       category: data['category'],
-      photoUrl: data['photoUrl'] | "",
+      photoUrl: data['photoUrl'] ?? "",
+      createdAt: data['createdAt']?.toDate() ?? DateTime.now(),
     );
   }
 
-  Map<String, dynamic> toFirestore() {
+  static Map<String, dynamic> create({
+    required String title,
+    required String body,
+    required String category,
+    String? photoUrl,
+  }) {
     return {
       'title': title,
       'body': body,
       'category': category,
       'photoUrl': photoUrl,
+      'createdAt': FieldValue.serverTimestamp(),
     };
   }
 }

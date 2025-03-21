@@ -53,11 +53,14 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCpT9VPK_QjAPSw3znE987aGPte_ed_OBY',
-    appId: '1:174143505010:ios:e2c705edc4cdf34244f8eb',
-    messagingSenderId: '174143505010',
-    projectId: 'flutter-forum-test',
-    storageBucket: 'flutter-forum-test.firebasestorage.app',
+    apiKey: 'AIzaSyC4JBZruWm7i8GI6W5Ge8HjXPN6LxEzZqM',
+    appId: '1:109766947030:ios:a6f48ca90dcf6155239977',
+    messagingSenderId: '109766947030',
+    projectId: 'withcenter-test-4',
+    databaseURL: 'https://withcenter-test-4-default-rtdb.firebaseio.com',
+    storageBucket: 'withcenter-test-4.appspot.com',
+    androidClientId: '109766947030-4oi5i0u241r3aefqa7rtpf4ong4ckg12.apps.googleusercontent.com',
+    iosClientId: '109766947030-ic4pg2ifaq1br2mfusv8mg5vl1038sjd.apps.googleusercontent.com',
     iosBundleId: 'com.forum.firebase.forumFirebaseApp',
   );
 

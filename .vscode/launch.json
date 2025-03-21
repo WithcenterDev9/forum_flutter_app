@@ -9,7 +9,15 @@
             "webRoot": "${workspaceFolder}"
         },
         {
-            "name": "Iphone Simulator",
+            "name": "iPhone 16 Pro Max",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "iPhone 16 Pro Max",
+            "cwd": "${workspaceFolder}",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "Iphone SE",
             "request": "launch",
             "type": "dart",
             "deviceId": "Iphone SE",
