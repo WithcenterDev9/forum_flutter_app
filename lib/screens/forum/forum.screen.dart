@@ -3,6 +3,7 @@ import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:forum_firebase_app/models/post.model.dart';
 import 'package:forum_firebase_app/screens/forum/post.create.screen.dart';
+import 'package:forum_firebase_app/screens/forum/post.view.screen.dart';
 import 'package:go_router/go_router.dart';
 
 class ForumScreen extends StatefulWidget {
@@ -31,6 +32,12 @@ class _ForumScreenState extends State<ForumScreen> {
           return ListTile(
             title: Text(post.title),
             subtitle: Text(post.createdAt.toString()),
+            onTap:
+                () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PostViewScreen(post: post),
+                  ),
+                ),
           );
         },
       ),

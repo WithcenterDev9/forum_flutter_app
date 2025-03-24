@@ -1,17 +1,22 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:forum_firebase_app/global.dart';
 import 'package:forum_firebase_app/models/post.model.dart';
 import 'package:forum_firebase_app/widgets/label_textfield.dart';
 import 'package:forum_firebase_app/widgets/photo_picker.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 // This the screen where the user can add a post
 
 class PostCreateScreen extends StatefulWidget {
   static const String routeName = '/post_create/:category';
   final String category;
-  const PostCreateScreen({super.key, required this.category});
+  final PostModel? post;
+  const PostCreateScreen({super.key, required this.category, this.post});
 
   @override
   State<PostCreateScreen> createState() => _PostCreateScreenState();
@@ -23,14 +28,26 @@ class _PostCreateScreenState extends State<PostCreateScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController bodyController = TextEditingController();
   FirebaseFirestore db = FirebaseFirestore.instance;
+  final storage = FirebaseStorage.instance.ref();
 
   bool isLoading = false;
   late String selectedCategory;
+
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
     selectedCategory = widget.category;
+    if (widget.post != null) {
+      titleController.text = widget.post!.title;
+      bodyController.text = widget.post!.body;
+      selectedCategory = widget.post!.category;
+    }
+    if (widget.post != null && widget.post!.photoUrl != null) {
+      _image = File(widget.post!.photoUrl!);
+    }
   }
 
   @override
@@ -48,17 +65,48 @@ class _PostCreateScreenState extends State<PostCreateScreen> {
     }
   }
 
+  Future<void> _pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      setState(() {});
+    }
+    print(_image);
+  }
+
   Future<void> createPost() async {
     try {
       isLoading = true;
       setState(() {});
+
+      String? photoUrl;
+      if (_image != null) {
+        // Delete the previous image if it exists
+        if (widget.post != null && widget.post!.photoUrl != null) {
+          final previousImageRef = storage.child(widget.post!.photoUrl!);
+          await previousImageRef.delete();
+        }
+
+        final storageRef = storage.child(
+          'posts/${DateTime.now().millisecondsSinceEpoch}.jpg',
+        );
+        await storageRef.putFile(_image!);
+        photoUrl = await storageRef.getDownloadURL();
+      }
+
       final post = PostModel.create(
         title: titleController.text,
         body: bodyController.text,
         category: selectedCategory,
+        photoUrl: photoUrl,
       );
-      await db.collection('posts').add(post);
-      displaySnackbar("Post added successfully");
+      if (widget.post == null) {
+        await db.collection('posts').add(post);
+        displaySnackbar("Post added successfully");
+      } else {
+        await db.collection('posts').doc(widget.post!.id).update(post);
+        displaySnackbar("Post updated successfully");
+      }
       if (mounted) {
         context.pop();
       }
@@ -73,14 +121,20 @@ class _PostCreateScreenState extends State<PostCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Post")),
+      appBar: AppBar(
+        title: Text(widget.post == null ? "Add Post" : "Edit Post"),
+      ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               const SizedBox(height: 20),
-              PhotoPicker(),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: Text("TEST: Add Photo"),
+              ),
               const SizedBox(height: 20),
               LabelTextfield(label: "Title", controller: titleController),
               LabelTextfield(

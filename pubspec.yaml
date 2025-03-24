@@ -20,6 +20,7 @@ dependencies:
   easy_design_system: ^0.0.28
   provider: ^6.1.2
   firebase_ui_firestore: ^1.7.1
+  firebase_storage: ^12.4.4
 
 dev_dependencies:
   flutter_test:
