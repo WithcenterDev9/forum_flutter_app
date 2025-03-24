@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:forum_firebase_app/global.dart';
 import 'package:forum_firebase_app/models/post.model.dart';
 import 'package:forum_firebase_app/widgets/label_textfield.dart';
-import 'package:forum_firebase_app/widgets/photo_picker.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
